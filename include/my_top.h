@@ -12,6 +12,23 @@ typedef struct coords_s {
     int y;
 } coords_t;
 
-int my_getloadavg(double loadavg[], int nelem);
+typedef struct proc_s {
+    int pid;
+    int pr;
+    int ni;
+    int virt;
+    int res;
+    int shr;
+    char state;
+    double cpu;
+    double mem;
+    char *time;
+    char *command;
+} proc_t;
+
+void print_header(void);
+void print_time(void);
+void print_uptime(void);
+void print_loadavg(void);
 
 #endif /* !MY_TOP_H_ */

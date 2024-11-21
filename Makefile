@@ -6,13 +6,15 @@
 ##
 
 SRC    =    src/main.c		\
-			src/loadavg.c
+			src/loadavg.c	\
+			src/header.c	\
+			src/time.c
 
-NAME   =    base
+NAME   =    my_top
 
 CC     =    gcc
 
-CFLAGS =    -W -Wall -Wextra -Iinclude -Llib -lmy -lncurses
+CFLAGS =    -W -Wall -Wextra -Iinclude -Llib -lmy -lncurses -g
 
 OBJ    =    $(SRC:.c=.o)
 

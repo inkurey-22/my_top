@@ -35,13 +35,15 @@
 *.i*86
 *.x86_64
 *.hex
-base
+my_top
 
 # Debug files
 *.dSYM/
 *.su
 *.idb
 *.pdb
+vgcore.*
+log
 
 # Kernel Module Compile Results
 *.mod*

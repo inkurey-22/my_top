@@ -32,26 +32,25 @@ void check_inputs(coords_t *coords)
         coords->y++;
 }
 
-int main(void)
+void launch_top(void)
 {
-    double loadavg[3];
     coords_t coords = {0, 0};
 
+    while (1) {
+        print_header();
+        check_inputs(&coords);
+        clear();
+    }
+}
+
+int main(void)
+{
     initscr();
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
-    timeout(1000);
-    while (1) {
-        if (my_getloadavg(loadavg, 3) == -1){
-            endwin();
-            return 84;
-        }
-        mvprintw(coords.x, coords.y, "Load average: %.2f %.2f %.2f\n",
-            loadavg[0], loadavg[1], loadavg[2]);
-        check_inputs(&coords);
-        clear();
-    }
+    timeout(3000);
+    launch_top();
     endwin();
     return 0;
 }

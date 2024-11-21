@@ -74,7 +74,7 @@ OBJ_DIR =   obj
 
 OBJ     =   $(SRC:%.c=$(OBJ_DIR)/%.o)
 
-CFLAGS  =   -I../include -Wall -Wextra
+CFLAGS  =   -I../include -Wall -Wextra -g
 
 all: $(NAME)
 
