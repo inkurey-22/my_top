@@ -38,7 +38,13 @@ void top_line(void)
     print_loadavg();
 }
 
-void print_header(void)
+void line_two(list_t *procs)
+{
+    return;
+}
+
+void print_header(list_t *procs)
 {
     top_line();
+    line_two(procs);
 }
