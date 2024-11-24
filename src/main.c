@@ -35,9 +35,12 @@ void check_inputs(coords_t *coords)
 void launch_top(void)
 {
     coords_t coords = {0, 0};
+    list_t *procs = NULL;
 
     while (1) {
-        print_header();
+        procs = get_proc_list(void);
+        print_header(procs);
+        print_procs(procs);
         check_inputs(&coords);
         clear();
     }
