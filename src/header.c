@@ -17,7 +17,7 @@ static void print_users(void)
 {
     FILE *fp = fopen("/var/run/utmp", "r");
     char buf[128];
-    int users = 1;
+    int users = 0;
 
     if (fp == NULL)
         return;
