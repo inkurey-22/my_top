@@ -5,59 +5,75 @@
 ** get processes infos
 */
 
+#include <stdio.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <sys/types.h>
+
 #include "my_lists.h"
+#include "my_strings.h"
 
 #include "my_top.h"
 
-void parse_infos(char **infos, list_t *list)
+void parse_proc_infos(proc_t *proc, char *buff)
 {
-    proc_t *proc = malloc(sizeof(proc_t));
+    char **tab = split_string(buff, "( )");
 
-    if (proc == NULL)
+    if (!tab)
         return;
-    proc->pid = atoi(infos[0]);
-    proc->name = infos[1];
-    proc->state = infos[2];
-    proc->ppid = atoi(infos[3]);
-    proc->priority = atoi(infos[17]);
-    proc->nice = atoi(infos[18]);
-    proc->vsize = atoi(infos[22]);
-    proc->rss = atoi(infos[23]);
-    add_node(list, proc);
+    proc->state = tab[2][0];
+    proc->command = my_strdup(tab[1]);
+    proc->pr = atoi(tab[17]);
+    proc->ni = atoi(tab[18]);
+    proc->virt = atoi(tab[22]);
+    proc->res = atoi(tab[23]);
 }
 
-void get_proc(char *path, list_t *list)
+void get_proc_infos(proc_t *proc)
 {
-    FILE *file = fopen(path, "r");
-    char *line = malloc(sizeof(char) * 1024);
-    char **infos = NULL;
+    char path[256];
+    int fd = 0;
+    char *buff = NULL;
+    size_t len = 0;
 
-    if (file == NULL)
+    sprintf(path, "/proc/%d/stat", proc->pid);
+    fd = open(path, O_RDONLY);
+    if (fd == -1)
         return;
-    if (line == NULL)
+    buff = malloc(1024);
+    if (!buff)
         return;
-    memset(line, 0, 1024);
-    fgets(line, 1024, file);
-    infos = split_string(line, " ");
-    parse_infos(infos, list);
+    printw("Coucou");
+    len = read(fd, buff, 1024);
+    printw("Autre coucou");
+    if (len <= 0)
+        return;
+    buff[len] = '\0';
+    printw("%s\n", buff);
+    parse_proc_infos(proc, buff);
 }
 
-list_t *get_proc_list(void)
+list_t *get_procs(list_t *procs)
 {
-    list_t *list = NULL;
     DIR *dir = opendir("/proc");
     struct dirent *entry;
-    char path[256];
-    int pid = 0;
+    proc_t *proc = NULL;
 
+    if (!dir)
+        return NULL;
     do {
         entry = readdir(dir);
-        if (entry == NULL)
-            break;
-        pid = atoi(entry->d_name);
-        if (pid == 0)
-            continue;
-        sprintf(path, "/proc/%d/stat", pid);
-        get_proc(path, list);
-    } while (entry != NULL);
+        if (entry && atoi(entry->d_name) != 0) {
+            proc = malloc(sizeof(proc_t));
+            if (!proc)
+                return NULL;
+            proc->pid = atoi(entry->d_name);
+            get_proc_infos(proc);
+            append_node(&procs, proc);
+        }
+    } while (entry);
+    closedir(dir);
+    return procs;
 }
