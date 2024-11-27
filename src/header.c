@@ -38,13 +38,15 @@ void top_line(void)
     print_loadavg();
 }
 
-void line_two(list_t *procs)
+
+void line_two()
 {
-    return;
+    printw("Tasks: 000 total,  0 running, 000 sleeping,");
+    printw("   0 stopped,   0 zombie\n");
 }
 
-void print_header(list_t *procs)
+void print_header()
 {
     top_line();
-    line_two(procs);
+    line_two();
 }

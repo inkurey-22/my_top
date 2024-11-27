@@ -7,6 +7,10 @@
 #ifndef MY_TOP_H_
     #define MY_TOP_H_
 
+    #include "my_lists.h"
+
+    #include <ncurses.h>
+
 typedef struct coords_s {
     int x;
     int y;
@@ -26,9 +30,10 @@ typedef struct proc_s {
     char *command;
 } proc_t;
 
-void print_header(void);
+void print_header();
 void print_time(void);
 void print_uptime(void);
 void print_loadavg(void);
+
 
 #endif /* !MY_TOP_H_ */

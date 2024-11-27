@@ -44,7 +44,6 @@ void print_uptime(void)
     FILE *fp = fopen("/proc/uptime", "r");
     char buf[128];
     char *uptime;
-    char *idle;
 
     if (fp == NULL)
         return;
