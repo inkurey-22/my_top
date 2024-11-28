@@ -13,11 +13,4 @@ void print_procs(list_t *procs)
     proc_t *proc = NULL;
 
     printw("PID PR NI VIRT RES S COMMAND\n");
-    /*
-    while (tmp) {
-        proc = tmp->data;
-        printw("%d %d %d %d %d %c %s\n", proc->pid, proc->pr, proc->ni,
-            proc->virt, proc->res, proc->state, proc->command);
-        tmp = tmp->next;
-    }*/
 }

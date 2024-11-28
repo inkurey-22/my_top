@@ -8,7 +8,9 @@
 SRC    =    src/main.c		\
 			src/loadavg.c	\
 			src/header.c	\
-			src/time.c
+			src/time.c      \
+			src/cpu.c		\
+			src/mem.c		\
 
 NAME   =    my_top
 

@@ -30,10 +30,11 @@ typedef struct proc_s {
     char *command;
 } proc_t;
 
-void print_header();
+void print_header(void);
 void print_time(void);
 void print_uptime(void);
 void print_loadavg(void);
-
+void print_cpu(void);
+void print_mem(void);
 
 #endif /* !MY_TOP_H_ */

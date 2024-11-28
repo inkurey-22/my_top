@@ -12,13 +12,22 @@
 
 void print_loadavg(void)
 {
-    double loadavg[3];
+    double loadavg[3] = {0.0, 0.0, 0.0};
     FILE *fp = fopen("/proc/loadavg", "r");
+    int count = 0;
 
     if (fp == NULL)
         return;
-    fscanf(fp, "%lf %lf %lf", &loadavg[0], &loadavg[1], &loadavg[2]);
+    count = fscanf(fp, "%lf %lf %lf", &loadavg[0], &loadavg[1],
+        &loadavg[2]);
     fclose(fp);
-    printw("load average: %.2f, %.2f, %.2f\n",
-        loadavg[0], loadavg[1], loadavg[2]);
+    if (count < 1)
+        printw("load average: N/A\n");
+    if (count == 1)
+        printw("load average: %.2f\n", loadavg[0]);
+    if (count == 2)
+        printw("load average: %.2f, %.2f\n", loadavg[0], loadavg[1]);
+    if (count == 3)
+        printw("load average: %.2f, %.2f, %.2f\n", loadavg[0], loadavg[1],
+            loadavg[2]);
 }

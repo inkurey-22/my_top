@@ -67,8 +67,6 @@ list_t *get_procs(list_t *procs)
         entry = readdir(dir);
         if (entry && atoi(entry->d_name) != 0) {
             proc = malloc(sizeof(proc_t));
-            if (!proc)
-                return NULL;
             proc->pid = atoi(entry->d_name);
             get_proc_infos(proc);
             append_node(&procs, proc);
