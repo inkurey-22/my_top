@@ -9,7 +9,17 @@
 
 #include "my_strings.h"
 
-void get_infos(char **mem)
+static void get_swap_infos(char **mem)
+{
+    const double total = atof(mem[14] + 10) / 1024;
+    const double free = atof(mem[15] + 9) / 1024;
+    const double used = total - free;
+
+    printw("MiB Swap: %.1f total,  %.1f free,  %.1f used,  %.1f avail Mem\n",
+        total, free, used, atof(mem[2] + 13) / 1024);
+}
+
+static void get_mem_infos(char **mem)
 {
     const double total = atof(mem[0] + 9) / 1024;
     const double free = atof(mem[1] + 8) / 1024;
@@ -40,5 +50,6 @@ void print_mem(void)
     mem = split_string(buff, "\n");
     if (mem == NULL)
         return;
-    get_infos(mem);
+    get_mem_infos(mem);
+    get_swap_infos(mem);
 }

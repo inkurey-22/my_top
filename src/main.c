@@ -14,7 +14,7 @@
 
 void check_inputs(void)
 {
-    int ch = getch();
+    const int ch = getch();
 
     if (ch == 'q'){
         endwin();
