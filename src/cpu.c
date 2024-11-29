@@ -22,7 +22,7 @@ static void print_infos(__attribute__((unused)) char **cpu)
 void print_cpu(void)
 {
     FILE *fp = fopen("/proc/stat", "r");
-    char *buff = malloc(sizeof(char) * 1024);
+    char *buff = malloc(sizeof(char) * (1024 + 1));
     size_t size = 0;
     char **cpu = NULL;
 
@@ -31,6 +31,7 @@ void print_cpu(void)
     size = fread(buff, 1024, 1, fp);
     if (size <= 0)
         return;
+    buff[size] = '\0';
     cpu = split_string(buff, " ");
     if (cpu == NULL)
         return;

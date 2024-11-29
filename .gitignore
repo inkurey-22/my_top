@@ -43,7 +43,7 @@ my_top
 *.idb
 *.pdb
 vgcore.*
-log
+log*
 
 # Kernel Module Compile Results
 *.mod*

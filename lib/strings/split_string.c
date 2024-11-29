@@ -13,7 +13,7 @@
 static int isdelim(char c, char const *delim)
 {
     for (int i = 0; delim[i] != '\0'; i++)
-        if (c == delim[i])
+        if (c == '\0' || c == delim[i])
             return 1;
     return 0;
 }
@@ -23,10 +23,11 @@ static int count_words(char const *str, char const *delim)
     int wcount = 0;
     int i = 0;
     int is_word = 0;
+    int len = my_strlen(str);
 
     if (str == NULL)
         return 0;
-    while (str[i] != '\0') {
+    while (i < len) {
         if (!isdelim(str[i], delim) && is_word == 0){
             is_word = 1;
             wcount++;
@@ -45,7 +46,7 @@ char **split_string(char const *str, char const *delim)
     int i = 0;
     int start = 0;
 
-    for (int j = 0; j < wcount; j++){
+    for (int j = 0; j < wcount; j++) {
         while (isdelim(str[i], delim))
             i++;
         start = i;

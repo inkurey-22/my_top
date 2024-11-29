@@ -27,6 +27,9 @@ void parse_proc_infos(proc_t *proc, const char *buff)
     proc->command = my_strdup(tab[1]);
     proc->pr = atoi(tab[17]);
     proc->ni = atoi(tab[18]);
+    for (int i = 0; tab[i]; i++)
+        free(tab[i]);
+    free(tab);
 }
 
 void get_proc_infos(proc_t *proc)
@@ -40,7 +43,7 @@ void get_proc_infos(proc_t *proc)
     fp = fopen(path, "r");
     if (!fp)
         return;
-    buff = malloc(1024);
+    buff = malloc(sizeof(char) * (1024 + 1));
     if (!buff)
         return;
     len = fread(buff, 1, 1024, fp);
