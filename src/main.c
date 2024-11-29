@@ -12,6 +12,18 @@
 
 #include "my_top.h"
 
+static void free_procs(list_t *procs)
+{
+    list_t *tmp = procs;
+    proc_t *proc = NULL;
+
+    for (; tmp; tmp = tmp->next) {
+        proc = tmp->data;
+        free(proc->command);
+        free(proc);
+    }
+}
+
 void check_inputs(void)
 {
     const int ch = getch();
@@ -24,8 +36,13 @@ void check_inputs(void)
 
 void launch_top(void)
 {
+    list_t *procs = NULL;
     while (1) {
-        print_header();
+        procs = get_procs(procs);
+        print_header(procs);
+        print_procs(procs);
+        free_procs(procs);
+        procs = NULL;
         check_inputs();
         clear();
     }
@@ -34,9 +51,15 @@ void launch_top(void)
 int main(void)
 {
     initscr();
+    if (has_colors() == FALSE) {
+        endwin();
+        return 84;
+    }
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
+    start_color();
+    init_pair(1, COLOR_BLACK, COLOR_WHITE);
     timeout(3000);
     launch_top();
     endwin();

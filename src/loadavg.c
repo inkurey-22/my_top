@@ -10,6 +10,8 @@
 
 #include <ncurses.h>
 
+#include "my_top.h"
+
 void print_loadavg(void)
 {
     double loadavg[3] = {0.0, 0.0, 0.0};

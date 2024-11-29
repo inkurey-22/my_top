@@ -50,6 +50,10 @@ void print_mem(void)
     mem = split_string(buff, "\n");
     if (mem == NULL)
         return;
+    free(buff);
     get_mem_infos(mem);
     get_swap_infos(mem);
+    for (int i = 0; mem[i] != NULL; i++)
+        free(mem[i]);
+    free(mem);
 }

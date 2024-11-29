@@ -17,7 +17,7 @@
 
 #include "my_top.h"
 
-void parse_proc_infos(proc_t *proc, char *buff)
+void parse_proc_infos(proc_t *proc, const char *buff)
 {
     char **tab = split_string(buff, "( )");
 
@@ -27,32 +27,29 @@ void parse_proc_infos(proc_t *proc, char *buff)
     proc->command = my_strdup(tab[1]);
     proc->pr = atoi(tab[17]);
     proc->ni = atoi(tab[18]);
-    proc->virt = atoi(tab[22]);
-    proc->res = atoi(tab[23]);
 }
 
 void get_proc_infos(proc_t *proc)
 {
     char path[256];
-    int fd = 0;
+    FILE *fp = NULL;
     char *buff = NULL;
     size_t len = 0;
 
     sprintf(path, "/proc/%d/stat", proc->pid);
-    fd = open(path, O_RDONLY);
-    if (fd == -1)
+    fp  = fopen(path, "r");
+    if (!fp)
         return;
     buff = malloc(1024);
     if (!buff)
         return;
-    printw("Coucou");
-    len = read(fd, buff, 1024);
-    printw("Autre coucou");
+    len = fread(buff, 1, 1024, fp);
     if (len <= 0)
         return;
     buff[len] = '\0';
-    printw("%s\n", buff);
     parse_proc_infos(proc, buff);
+    fclose(fp);
+    free(buff);
 }
 
 list_t *get_procs(list_t *procs)

@@ -13,6 +13,20 @@
 
 #include <ncurses.h>
 
+static int find_state(list_t *procs, char state)
+{
+    list_t *tmp = procs;
+    proc_t *proc = NULL;
+    int count = 0;
+
+    for (; tmp; tmp = tmp->next) {
+        proc = tmp->data;
+        if (proc->state == state)
+            count++;
+    }
+    return count;
+}
+
 static void print_users(void)
 {
     FILE *fp = fopen("/var/run/utmp", "r");
@@ -38,16 +52,22 @@ void top_line(void)
     print_loadavg();
 }
 
-void line_two(void)
+void line_two(list_t *procs)
 {
-    printw("Tasks: 000 total,  0 running, 000 sleeping,");
-    printw("   0 stopped,   0 zombie\n");
+    int nb_procs = list_size(procs);
+    int run = find_state(procs, 'R');
+    int stopped = find_state(procs, 'T');
+    int zombie = find_state(procs, 'Z');
+    int sleep = nb_procs - run;
+
+    printw("Tasks: %d total,  %d running,  %d sleeping", nb_procs, run, sleep);
+    printw(",  %d stopped,  %d zombie\n", stopped, zombie);
 }
 
-void print_header(void)
+void print_header(list_t *procs)
 {
     top_line();
-    line_two();
+    line_two(procs);
     print_cpu();
     print_mem();
 }

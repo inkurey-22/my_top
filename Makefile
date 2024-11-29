@@ -11,6 +11,8 @@ SRC    =    src/main.c		\
 			src/time.c      \
 			src/cpu.c		\
 			src/mem.c		\
+			src/print_procs.c	\
+			src/get_procs.c
 
 NAME   =    my_top
 
