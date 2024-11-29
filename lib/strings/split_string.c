@@ -10,7 +10,7 @@
 #include <stddef.h>
 #include "my_strings.h"
 
-static int isdelim(char c, char const *delim)
+int isdelim(char c, char const *delim)
 {
     for (int i = 0; delim[i] != '\0'; i++)
         if (c == '\0' || c == delim[i])
@@ -18,16 +18,15 @@ static int isdelim(char c, char const *delim)
     return 0;
 }
 
-static int count_words(char const *str, char const *delim)
+int count_words(char const *str, char const *delim)
 {
     int wcount = 0;
     int i = 0;
     int is_word = 0;
-    int len = my_strlen(str);
 
     if (str == NULL)
         return 0;
-    while (i < len) {
+    while (str[i] != '\0') {
         if (!isdelim(str[i], delim) && is_word == 0){
             is_word = 1;
             wcount++;
