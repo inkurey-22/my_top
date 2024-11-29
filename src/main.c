@@ -34,13 +34,14 @@ void check_inputs(void)
     }
 }
 
-void launch_top(void)
+void launch_top(WINDOW *win)
 {
     list_t *procs = NULL;
+
     while (1) {
         procs = get_procs(procs);
         print_header(procs);
-        print_procs(procs);
+        print_procs(procs, win);
         free_procs(procs);
         procs = NULL;
         check_inputs();
@@ -50,7 +51,8 @@ void launch_top(void)
 
 int main(void)
 {
-    initscr();
+    WINDOW *win = initscr();
+
     if (has_colors() == FALSE) {
         endwin();
         return 84;
@@ -58,10 +60,8 @@ int main(void)
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
-    start_color();
-    init_pair(1, COLOR_BLACK, COLOR_WHITE);
     timeout(3000);
-    launch_top();
+    launch_top(win);
     endwin();
     return 0;
 }

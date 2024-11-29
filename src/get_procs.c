@@ -37,7 +37,7 @@ void get_proc_infos(proc_t *proc)
     size_t len = 0;
 
     sprintf(path, "/proc/%d/stat", proc->pid);
-    fp  = fopen(path, "r");
+    fp = fopen(path, "r");
     if (!fp)
         return;
     buff = malloc(1024);

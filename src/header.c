@@ -8,10 +8,13 @@
 #include "my_top.h"
 
 #include <time.h>
-#include <stdlib.h>
+#include <utmp.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include <string.h>
 
 #include <ncurses.h>
+#include <bits/fcntl-linux.h>
 
 static int find_state(list_t *procs, char state)
 {
@@ -29,17 +32,17 @@ static int find_state(list_t *procs, char state)
 
 static void print_users(void)
 {
-    FILE *fp = fopen("/var/run/utmp", "r");
-    char buf[128];
+    const int fd = open("/var/run/utmp", O_RDONLY);
+    struct utmp user;
     int users = 0;
 
-    if (fp == NULL)
+    if (fd < 0)
         return;
-    while (fgets(buf, sizeof(buf), fp) != NULL) {
-        if (buf[0] != '\0')
+    while (read(fd, &user, sizeof(struct utmp)) > 0) {
+        if (user.ut_type == USER_PROCESS)
             users++;
     }
-    fclose(fp);
+    close(fd);
     printw("%d user%s, ", users, users > 1 ? "s" : "");
 }
 
