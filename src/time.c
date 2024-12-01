@@ -7,6 +7,7 @@
 
 #include "my_top.h"
 
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -20,7 +21,7 @@ void print_time(void)
     char s[64];
 
     strftime(s, sizeof(s), "%H:%M:%S", tm);
-    printw(s);
+    printw("%s", s);
 }
 
 static void format_uptime(char *uptime)
