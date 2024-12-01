@@ -11,11 +11,6 @@
 
     #include <ncurses.h>
 
-typedef struct coords_s {
-    int x;
-    int y;
-} coords_t;
-
 typedef struct proc_s {
     int pid;
     int pr;
