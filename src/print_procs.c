@@ -21,7 +21,7 @@ void print_proc(proc_t *proc, int i)
     mvprintw(i, 39, " %s", proc->command);
 }
 
-void print_procs(list_t *procs, WINDOW *win)
+void print_procs(list_t *procs)
 {
     list_t *tmp = procs;
     proc_t *proc = NULL;

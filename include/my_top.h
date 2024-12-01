@@ -36,7 +36,7 @@ void print_uptime(void);
 void print_loadavg(void);
 void print_cpu(void);
 void print_mem(void);
-void print_procs(list_t *procs, WINDOW *win);
+void print_procs(list_t *procs);
 
 list_t *get_procs(list_t *procs);
 #endif /* !MY_TOP_H_ */
