@@ -36,4 +36,7 @@ int my_str_isnum(char const *);
 int my_str_isprintable(char const *);
 int my_str_isupper(char const *);
 
+// Others
+void free_tab(char **);
+
 #endif /* !MY_STRINGS_H_ */

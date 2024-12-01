@@ -54,6 +54,7 @@ SRC 	=   io/my_putnbr.c                   \
             strings/my_strstr.c              \
             strings/my_strupcase.c           \
             strings/split_string.c           \
+            strings/free_tab.c			     \
             lists/add_to_top.c               \
             lists/append.c                   \
             lists/create.c                   \

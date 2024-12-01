@@ -5,6 +5,7 @@
 ** main
 */
 
+#include <stddef.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -24,14 +25,13 @@ static void free_procs(list_t *procs)
     }
 }
 
-void check_inputs(void)
+int check_inputs(void)
 {
     const int ch = getch();
 
-    if (ch == 'q'){
-        endwin();
-        exit(0);
-    }
+    if (ch == 'q')
+        return 1;
+    return 0;
 }
 
 void launch_top(WINDOW *win)
@@ -44,7 +44,10 @@ void launch_top(WINDOW *win)
         print_procs(procs, win);
         free_procs(procs);
         procs = NULL;
-        check_inputs();
+        if (check_inputs()) {
+            endwin();
+            return;
+        }
         clear();
     }
 }

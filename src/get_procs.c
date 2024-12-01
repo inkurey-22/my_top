@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/types.h>
@@ -16,6 +17,40 @@
 #include "my_strings.h"
 
 #include "my_top.h"
+
+void parse_shr_tab(char *buff, int *shr)
+{
+    char **tab = split_string(buff, "\n");
+
+    if (!tab)
+        return;
+    for (int i = 0; tab[i]; i++)
+        if (my_strncmp("RssShmem", tab[i], 8) == 0)
+            *shr = atoi(tab[i] + 10);
+    free_tab(tab);
+    free(buff);
+}
+
+int get_shr(int pid)
+{
+    int shr = 0;
+    char path[256];
+    FILE *fp = NULL;
+    char *buff = NULL;
+    size_t len = 0;
+
+    sprintf(path, "/proc/%d/statm", pid);
+    fp = fopen(path, "r");
+    buff = malloc(sizeof(char) * (1024 + 1));
+    if (!fp || !buff)
+        return 0;
+    len = fread(buff, 1, 1024, fp);
+    if (len <= 0)
+        return 0;
+    buff[len] = '\0';
+    parse_shr_tab(buff, &shr);
+    return shr;
+}
 
 void parse_proc_infos(proc_t *proc, const char *buff)
 {
@@ -27,9 +62,8 @@ void parse_proc_infos(proc_t *proc, const char *buff)
     proc->command = my_strdup(tab[1]);
     proc->pr = atoi(tab[17]);
     proc->ni = atoi(tab[18]);
-    for (int i = 0; tab[i]; i++)
-        free(tab[i]);
-    free(tab);
+    proc->shr = get_shr(proc->pid);
+    free_tab(tab);
 }
 
 void get_proc_infos(proc_t *proc)
