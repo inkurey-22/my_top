@@ -6,6 +6,7 @@
 */
 
 #include <stddef.h>
+#include <string.h>
 
 #include "my_top.h"
 
@@ -25,7 +26,7 @@ void print_proc(const proc_t *proc, const int i)
     mvprintw(i, 46, " %-7s", proc->command);
 }
 
-void print_procs(list_t *procs)
+void print_procs(list_t *procs, const char *user)
 {
     list_t *tmp = procs;
     proc_t *proc = NULL;
@@ -39,7 +40,10 @@ void print_procs(list_t *procs)
     attron(A_NORMAL);
     for (int i = 7; tmp; i++) {
         proc = tmp->data;
-        print_proc(proc, i);
+        if (user == NULL || strcmp(user, proc->user) == 0)
+            print_proc(proc, i);
+        else
+            i--;
         tmp = tmp->next;
     }
 }

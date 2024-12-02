@@ -38,14 +38,14 @@ int check_inputs(void)
     return 0;
 }
 
-void launch_top(void)
+void launch_top(const flags_t *flags)
 {
     list_t *procs = NULL;
 
-    while (1) {
+    for (int i = 0; i != flags->frames; i++) {
         procs = get_procs(procs);
         print_header(procs);
-        print_procs(procs);
+        print_procs(procs, flags->user);
         free_procs(procs);
         procs = NULL;
         if (check_inputs()) {
@@ -56,8 +56,23 @@ void launch_top(void)
     }
 }
 
-int main(void)
+void get_flags(const int ac, char **av, flags_t *flags)
 {
+    for (int i = 1; i < ac; i++) {
+        if (strcmp(av[i], "-u") == 0 && i + 1 < ac)
+            flags->user = av[i + 1];
+        if (strcmp(av[i], "-d") == 0 && i + 1 < ac)
+            flags->delay = atoi(av[i + 1]);
+        if (strcmp(av[i], "-s") == 0 && i + 1 < ac)
+            flags->frames = atoi(av[i + 1]);
+    }
+}
+
+int main(int ac, char **av)
+{
+    flags_t flags = {NULL, 3, -1};
+
+    get_flags(ac, av, &flags);
    	initscr();
     if (has_colors() == FALSE) {
         endwin();
@@ -67,8 +82,8 @@ int main(void)
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
-    timeout(3000);
-    launch_top();
+    timeout(1000 * flags.delay);
+    launch_top(&flags);
     endwin();
     return 0;
 }

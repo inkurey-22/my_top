@@ -11,6 +11,12 @@
 
     #include <ncurses.h>
 
+typedef struct flags_s {
+    char *user;
+    int delay;
+    int frames;
+} flags_t;
+
 typedef struct proc_s {
     int pid;
     int pr;
@@ -32,7 +38,7 @@ void print_uptime(void);
 void print_loadavg(void);
 void print_cpu(void);
 void print_mem(void);
-void print_procs(list_t *procs);
+void print_procs(list_t *procs, const char *user);
 
 list_t *get_procs(list_t *procs);
 void get_usr(proc_t *proc);
