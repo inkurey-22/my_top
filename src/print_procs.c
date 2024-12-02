@@ -12,7 +12,10 @@
 void print_proc(const proc_t *proc, const int i)
 {
     mvprintw(i, 0, "%7d", proc->pid);
-    mvprintw(i, 7, "%5d", proc->pr);
+    if (proc->pr > -100)
+        mvprintw(i, 7, "%5d", proc->pr);
+    else
+        mvprintw(i, 7, "%5s", "rt");
     mvprintw(i, 12, "%4d", proc->ni);
     mvprintw(i, 16, "%8d", proc->virt);
     mvprintw(i, 24, "%7d", proc->res);

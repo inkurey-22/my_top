@@ -18,8 +18,8 @@
 
 static int find_state(list_t *procs, char state)
 {
-    list_t *tmp = procs;
-    proc_t *proc = NULL;
+    const list_t *tmp = procs;
+    const proc_t *proc = NULL;
     int count = 0;
 
     for (; tmp; tmp = tmp->next) {
