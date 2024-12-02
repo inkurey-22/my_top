@@ -9,7 +9,7 @@
 
 #include "my_top.h"
 
-void print_proc(proc_t *proc, int i)
+void print_proc(const proc_t *proc, const int i)
 {
     mvprintw(i, 0, "%7d", proc->pid);
     mvprintw(i, 7, "%5d", proc->pr);
@@ -18,7 +18,7 @@ void print_proc(proc_t *proc, int i)
     mvprintw(i, 24, "%7d", proc->res);
     mvprintw(i, 31, "%6d", proc->shr);
     mvprintw(i, 37, "%2c", proc->state);
-    mvprintw(i, 39, " %s", proc->command);
+    mvprintw(i, 39, " %-22s", proc->command);
 }
 
 void print_procs(list_t *procs)
