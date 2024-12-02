@@ -13,7 +13,8 @@ SRC    =    src/main.c		\
 			src/mem.c		\
 			src/print_procs.c	\
 			src/get_procs.c	\
-			src/user.c
+			src/user.c		\
+			src/kill.c
 
 NAME   =    my_top
 

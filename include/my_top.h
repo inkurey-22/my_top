@@ -37,4 +37,6 @@ void print_procs(list_t *procs);
 list_t *get_procs(list_t *procs);
 void get_usr(proc_t *proc);
 
+void launch_kill(void);
+
 #endif /* !MY_TOP_H_ */

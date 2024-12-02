@@ -5,11 +5,12 @@
 ** main
 */
 
+#include <errno.h>
+#include <string.h>
+#include <signal.h>
 #include <stddef.h>
 #include <unistd.h>
 #include <stdlib.h>
-
-#include "my_printf.h"
 
 #include "my_top.h"
 
@@ -32,6 +33,8 @@ int check_inputs(void)
 
     if (ch == 'q')
         return 1;
+    if (ch == 'k')
+        launch_kill();
     return 0;
 }
 
@@ -60,6 +63,7 @@ int main(void)
         endwin();
         return 84;
     }
+    curs_set(0);
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
