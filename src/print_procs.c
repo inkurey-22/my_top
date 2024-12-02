@@ -12,16 +12,17 @@
 void print_proc(const proc_t *proc, const int i)
 {
     mvprintw(i, 0, "%7d", proc->pid);
+    mvprintw(i, 8, "%-8s", proc->user);
     if (proc->pr > -100)
-        mvprintw(i, 7, "%5d", proc->pr);
+        mvprintw(i, 16, "%4d", proc->pr);
     else
-        mvprintw(i, 7, "%5s", "rt");
-    mvprintw(i, 12, "%4d", proc->ni);
-    mvprintw(i, 16, "%8d", proc->virt);
-    mvprintw(i, 24, "%7d", proc->res);
-    mvprintw(i, 31, "%6d", proc->shr);
-    mvprintw(i, 37, "%2c", proc->state);
-    mvprintw(i, 39, " %-22s", proc->command);
+        mvprintw(i, 16, "%4s", "rt");
+    mvprintw(i, 21, "%3d", proc->ni);
+    mvprintw(i, 25, "%7d", proc->virt);
+    mvprintw(i, 33, "%6d", proc->res);
+    mvprintw(i, 40, "%5d", proc->shr);
+    mvprintw(i, 47, "%1c", proc->state);
+    mvprintw(i, 49, "%s", proc->command);
 }
 
 void print_procs(list_t *procs)
@@ -31,8 +32,8 @@ void print_procs(list_t *procs)
     int line = 0;
 
     attron(A_STANDOUT);
-    line = printw("\n%7s %4s %3s %7s %6s %5s %1s %s",
-        "PID", "PR", "NI", "VIRT", "RES", "SHR", "S", "COMMAND");
+    line = printw("\n%7s %-8s %4s %3s %7s %6s %5s %1s %s",
+        "PID", "USER", "PR", "NI", "VIRT", "RES", "SHR", "S", "COMMAND");
     printw("%*s", COLS - line, "");
     attroff(A_STANDOUT);
     attron(A_NORMAL);

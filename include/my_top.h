@@ -21,6 +21,7 @@ typedef struct proc_s {
     char state;
     double cpu;
     double mem;
+    char *user;
     char *time;
     char *command;
 } proc_t;
@@ -34,4 +35,6 @@ void print_mem(void);
 void print_procs(list_t *procs);
 
 list_t *get_procs(list_t *procs);
+void get_usr(proc_t *proc);
+
 #endif /* !MY_TOP_H_ */

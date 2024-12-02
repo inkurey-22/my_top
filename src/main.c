@@ -21,6 +21,7 @@ static void free_procs(list_t *procs)
     for (; tmp; tmp = tmp->next) {
         proc = tmp->data;
         free(proc->command);
+        free(proc->user);
         free(proc);
     }
 }

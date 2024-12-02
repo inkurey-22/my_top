@@ -15,7 +15,7 @@ static void get_swap_infos(char **mem)
     const double free = atof(mem[15] + 9) / 1024;
     const double used = total - free;
 
-    printw("MiB Swap: %.1f total,  %.1f free,  %.1f used,  %.1f avail Mem\n",
+    printw("MiB Swap: %.1f total,  %.1f free,  %.1f used.  %.1f avail Mem\n",
         total, free, used, atof(mem[2] + 13) / 1024);
 }
 

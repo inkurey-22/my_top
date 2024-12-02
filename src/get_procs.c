@@ -52,6 +52,7 @@ void parse_proc_infos(proc_t *proc, const char *buff)
     proc->command = my_strdup(tab[1]);
     proc->pr = atoi(tab[17]);
     proc->ni = atoi(tab[18]);
+    get_usr(proc);
     get_memories(proc);
     free_tab(tab);
 }
