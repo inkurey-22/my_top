@@ -36,8 +36,10 @@ static void print_users(void)
     struct utmp user;
     int users = 0;
 
-    if (fd < 0)
+    if (fd < 0) {
+        printw("0 user, ");
         return;
+    }
     while (read(fd, &user, sizeof(struct utmp)) > 0) {
         if (user.ut_type == USER_PROCESS)
             users++;
