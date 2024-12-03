@@ -21,9 +21,11 @@ void manage_signal(const int pid)
     sig = atoi(sig_str);
     if (sig > 0) {
         if (kill(pid, sig) == 0)
-            mvprintw(5, 0, "Signal %d sent to process %d successfully. Press any key to continue.", sig, pid);
+            mvprintw(5, 0, "Signal %d sent to process %d successfully.",
+                sig, pid);
         else
-            mvprintw(5, 0, "Failed to send signal %d to process %d. Press any key to continue.", sig, pid);
+            mvprintw(5, 0, "Failed to send signal %d to process %d.",
+                sig, pid);
     } else
         mvprintw(5, 0, "Invalid signal. Press any key to continue.");
 }

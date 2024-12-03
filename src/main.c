@@ -73,7 +73,7 @@ int main(int ac, char **av)
     flags_t flags = {NULL, 3, -1};
 
     get_flags(ac, av, &flags);
-   	initscr();
+    initscr();
     if (has_colors() == FALSE) {
         endwin();
         return 84;
