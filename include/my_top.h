@@ -38,7 +38,7 @@ void print_uptime(void);
 void print_loadavg(void);
 void print_cpu(void);
 void print_mem(void);
-void print_procs(list_t *procs, const char *user);
+void print_procs(list_t *procs, const char *user, const int count);
 
 list_t *get_procs(list_t *procs);
 void get_usr(proc_t *proc);

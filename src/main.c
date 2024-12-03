@@ -27,7 +27,7 @@ static void free_procs(list_t *procs)
     }
 }
 
-int check_inputs(void)
+int check_inputs(int *count)
 {
     const int ch = getch();
 
@@ -35,23 +35,30 @@ int check_inputs(void)
         return 1;
     if (ch == 'k')
         launch_kill();
+    if (ch == KEY_UP)
+        *count -= 1;
+    if (ch == KEY_DOWN)
+        *count += 1;
     return 0;
 }
 
 void launch_top(const flags_t *flags)
 {
     list_t *procs = NULL;
+    int count = 0;
 
     for (int i = 0; i != flags->frames; i++) {
         procs = get_procs(procs);
         print_header(procs);
-        print_procs(procs, flags->user);
+        print_procs(procs, flags->user, count);
         free_procs(procs);
         procs = NULL;
-        if (check_inputs()) {
+        if (check_inputs(&count)) {
             endwin();
             return;
         }
+        if (count < 0)
+            count = 0;
         clear();
     }
 }

@@ -26,7 +26,7 @@ void print_proc(const proc_t *proc, const int i)
     mvprintw(i, 46, " %-7s", proc->command);
 }
 
-void print_procs(list_t *procs, const char *user)
+void print_procs(list_t *procs, const char *user, const int count)
 {
     list_t *tmp = procs;
     proc_t *proc = NULL;
@@ -38,6 +38,8 @@ void print_procs(list_t *procs, const char *user)
     printw("%*s", COLS - line, "");
     attroff(A_STANDOUT);
     attron(A_NORMAL);
+    for (int i = 0; i < count && tmp; i++)
+        tmp = tmp->next;
     for (int i = 7; tmp; i++) {
         proc = tmp->data;
         if (user == NULL || strcmp(user, proc->user) == 0)
