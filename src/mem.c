@@ -21,14 +21,14 @@ static void get_swap_infos(char **mem)
 
 static void get_mem_infos(char **mem)
 {
-    const long total = atol(mem[0] + 9);
-    const long free = atol(mem[1] + 8);
-    const long available = atol(mem[2] + 13);
-    const long buffers = atol(mem[3] + 9);
-    const long cached = atol(mem[4] + 8);
-    const long srec = atol(mem[25] + 13);
-    const long used = total - available;
-    const long buff_cache = buffers + cached + srec;
+    const int total = atoi(mem[0] + 9);
+    const int free = atoi(mem[1] + 8);
+    const int available = atoi(mem[2] + 13);
+    const int buffers = atoi(mem[3] + 9);
+    const int cached = atoi(mem[4] + 8);
+    const int srec = atoi(mem[25] + 13);
+    const int used = total - available;
+    const int buff_cache = buffers + cached + srec;
 
     printw("MiB Mem: %.1f total,  %.1f free,  %.1f used,  %.1f buff/cache\n",
         total / 1024.0, free / 1024.0, used / 1024.0, buff_cache / 1024.0);
