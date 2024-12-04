@@ -13,19 +13,6 @@
 
 #include "my_top.h"
 
-void parse_memory_tab(proc_t *proc, char *buff)
-{
-    char **tab = split_string(buff, " ");
-
-    if (!tab)
-        return;
-    proc->virt = atoi(tab[0]);
-    proc->res = atoi(tab[1]);
-    proc->shr = atoi(tab[2]);
-    free_tab(tab);
-    free(buff);
-}
-
 void get_memories(proc_t *proc)
 {
     char path[256];
