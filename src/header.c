@@ -63,7 +63,7 @@ void line_two(list_t *procs)
     int run = find_state(procs, 'R');
     int stopped = find_state(procs, 'T');
     int zombie = find_state(procs, 'Z');
-    int sleep = nb_procs - run;
+    int sleep = nb_procs - run - zombie - stopped;
 
     printw("Tasks: %d total,  %d running,  %d sleeping", nb_procs, run, sleep);
     printw(",  %d stopped,  %d zombie\n", stopped, zombie);
