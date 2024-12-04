@@ -21,17 +21,17 @@ static void get_swap_infos(char **mem)
 
 static void get_mem_infos(char **mem)
 {
-    const double total = atof(mem[0] + 9) / 1024;
-    const double free = atof(mem[1] + 8) / 1024;
-    const double available = atof(mem[2] + 13) / 1024;
-    const double buffers = atof(mem[3] + 9) / 1024;
-    const double cached = atof(mem[4] + 8) / 1024;
-    const double srec = atof(mem[25] + 13) / 1024;
-    const double used = total - available;
-    const double buff_cache = buffers + cached + srec;
+    const long total = atol(mem[0] + 9);
+    const long free = atol(mem[1] + 8);
+    const long available = atol(mem[2] + 13);
+    const long buffers = atol(mem[3] + 9);
+    const long cached = atol(mem[4] + 8);
+    const long srec = atol(mem[25] + 13);
+    const long used = total - available;
+    const long buff_cache = buffers + cached + srec;
 
     printw("MiB Mem: %.1f total,  %.1f free,  %.1f used,  %.1f buff/cache\n",
-        total, free, used, buff_cache);
+        total / 1024.0, free / 1024.0, used / 1024.0, buff_cache / 1024.0);
 }
 
 void print_mem(void)
